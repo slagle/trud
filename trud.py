@@ -219,3 +219,4 @@ print
 print
 
 print("This report generated with trud: https://github.com/slagle/trud")
+print
