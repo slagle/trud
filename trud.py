@@ -71,6 +71,8 @@ qe_accepted_list = [l for l in lists if l["name"] == "QE Accepted (Done)"][0]
 qe_accepted_list_id = qe_accepted_list["id"]
 qe_accepted_list_cards = trello.get("/lists/%s/cards" % qe_accepted_list_id)
 
+all_cards = trello.get("/boards/%s/cards" % board_id)
+
 def print_card(card):
     due = card["due"]
     if due is not None:
@@ -87,6 +89,9 @@ def print_card(card):
         members = "None"
     print ("#   Members: %s" % members)
 
+print("This report provides a daily summary of Trello status.")
+print
+
 print("####################################################################")
 print("# Blocked Epics:")
 print("#")
@@ -98,6 +103,22 @@ for card in next_cards:
         blocked += 1
 print("#")
 print("# Summary: %d epics are blocked" % blocked)
+print("####################################################################")
+print
+print
+
+
+print("####################################################################")
+print("# Epics requiring PM input:")
+print("#")
+pm_input = 0
+for card in all_cards:
+    label_names = [n["name"] for n in card["labels"]]
+    if "PM Input needed" in label_names and "EPIC" in label_names:
+        print_card(card)
+        pm_input += 1
+print("#")
+print("# Summary: %d epics require PM input" % pm_input)
 print("####################################################################")
 print
 print
