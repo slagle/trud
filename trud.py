@@ -101,6 +101,11 @@ for card in next_cards:
     if "Blocked" in label_names and "EPIC" in label_names:
         print_card(card)
         blocked += 1
+for card in in_progress_list_cards:
+    label_names = [n["name"] for n in card["labels"]]
+    if "Blocked" in label_names and "EPIC" in label_names:
+        print_card(card)
+        blocked += 1
 print("#")
 print("# Summary: %d epics are blocked" % blocked)
 print("####################################################################")
